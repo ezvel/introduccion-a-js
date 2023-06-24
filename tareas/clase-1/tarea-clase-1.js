@@ -2,47 +2,109 @@
 // y calcule la edad del usuario (más o menos).
 // Preguntarle estos datos al usuario y guardarlos en 2 variables
 // Ejecutar la función con estos datos
-// Impriman el resultado en la consola
-function calcularEdad(anioActual, anioNacimiento) {
-    return anioActual - anioNacimiento;
-}
 
-const anioActual = Number(prompt("Cuál es el año actual?"));
-const anioNacimiento = Number(prompt("En qué año naciste?"));
 
-console.log('Tenés ' + calcularEdad(anioActual, anioNacimiento) + ' años');
 
 // Preguntar el salario anual y calcular el salario mensual
 // Preguntar el salario mensual y calcular el anual
 // diario... semanal, por hora. etc.
 
-function calcularSalarioAnual(salarioMensual) {
-    const cantidadMesesEnUnAnio = 12;
-    return salarioMensual * cantidadMesesEnUnAnio;
+
+function validarSiDeseaSalir() {
+    let deseaSalir = prompt("¿Desea salir?");
+
+    if(validarSiSeIngresoEscapeOCancelar(deseaSalir) === true) {
+        validarSiDeseaSalir();
+
+    } else if (validarSiSeIngresoEspacioEnBlanco(deseaSalir) === true) {
+        alert("No puede ingresar espacios en blanco");
+        validarSiDeseaSalir();
+
+    } else if (deseaSalir.trim().toLowerCase() === "si") {
+        return true;
+
+    } else if (deseaSalir.trim().toLowerCase() === "no") {
+        return false;
+    } else {
+        alert("No entiendo tu respuesta. Intenta nuevamente");
+        validarSiDeseaSalir(mensaje);
+    }
 }
 
-function calcularSalarioMensual(salarioAnual) {
-    const cantidadMesesEnUnAnio = 12;
-    return salarioAnual / cantidadMesesEnUnAnio;
+function validarSiSeIngresoEscapeOCancelar(dato1, dato2) {
+    if(dato1 === null || dato2 === null) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
-function calcularSalarioSemanal(salarioAnual) {
-    const cantidadSemanasEnUnAnio = 52;
-    return salarioAnual / cantidadSemanasEnUnAnio;
+function validarSiSeIngresoEscapeOCancelar(dato1) {
+    if(dato1 === null) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
-function calcularSalarioDiario(salarioAnual) {
-    const cantidadDiasEnUnAnio = 365;
-    return salarioAnual / cantidadDiasEnUnAnio;
+function validarSiSeIngresoEspacioEnBlanco(dato1, dato2) {
+    if(dato1 === "" || dato2 === "") {
+        return true;
+    } else {
+        return false;
+    }
 }
 
-const salarioMensual = Number(prompt('Cuál es tu salario mensual?'));
-console.log('Tu salario anual es ' + calcularSalarioAnual(salarioMensual));
+function validarSiSeIngresoEspacioEnBlanco(dato1) {
+    if(dato1 === "") {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-const salarioAnual = Number(prompt('Cuál es tu salario mensual?'));
-console.log('Tu salario mensual es ' + calcularSalarioMensual(salarioAnual));
-console.log('Tu salario semanal es ' + calcularSalarioSemanal(salarioAnual));
-console.log('Tu salario diario es ' + calcularSalarioDiario(salarioAnual));
+function ingresarDatos() {
+    let salirDelPrograma = false;
+    let ingresoEspacioEnBlanco = false;
+    do {
+        const fechaActual = prompt("Ingresa la fecha actual");
+        const fechaDeNacimiento = prompt("Ingresa su fecha de nacimiento");
+    
+        if(validarSiSeIngresoEscapeOCancelar(fechaActual, fechaDeNacimiento) === true) {
+            if(validarSiDeseaSalir() === true) {
+                salirDelPrograma = true;
+            } else {
+                salirDelPrograma = false;
+            }
+        } else {
+            if(validarSiSeIngresoEspacioEnBlanco(fechaActual, fechaDeNacimiento) === true) {
+                alert("No puede ingresar espacios en blanco");
+                ingresoEspacioEnBlanco = true;
+            } else {
+                console.log("Hola");
+            }
+        }
+    
+    }while(salirDelPrograma === false || ingresoEspacioEnBlanco === true);
+}
+
+ingresarDatos();
+
+/*
+  
+Analicemos el inconveniente, primero intentamos crear funciones que intenten adpatarse a todos los
+tipos de ingreso de datos. Hasta ahi bien, intentamos con un dato y funcionó perfecto. Luego
+queríamos utilizar esa automatización para un dato más. El problema surgía en el desea salir, le colocabamos
+que si y, cómo esas validaciones son por cada dato, no salía del programa y pasaba a la siguiente ingreso de datos.
+Esto no podía ser así porque le dijimos que SALGA DEL PROGRAMA.
+
+Entonces probamos que ingrese todos los datos y luego valide. El problema es que las funciones que automatizan las
+validaciones ya no funcionan, o reciben 1 dato o reciben 2. No podemos crear 2 funciones que reciba 1 y otra
+identica que reciba 2. 
+
+Entonces ¿que hacemos?
+ 
+*/
 
 /// SCOPE
 
